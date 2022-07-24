@@ -1,0 +1,54 @@
+{
+  "name": "test-plugin",
+  "version": "0.0.1",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.0.0",
+    "@types/vscode": "^1.44.0",
+    "ts-loader": "^4.4.2",
+    "typescript": "~4.5.5",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.7.0",
+    "rimraf": "^3.0.2"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf dist",
+    "build": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "package": "webpack --mode production"
+  },
+  "engines": {
+    "vscode": "^1.44.0"
+  },
+  "activationEvents": [
+    "onView:testView"
+  ],
+  "main": "./dist/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "testView.runTask",
+        "title": "Run test task",
+        "icon": "$(play)"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "testView",
+          "name": "Test View"
+        }
+      ]
+    },
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "testView.runTask",
+          "when": "view == testView && viewItem == myTaskItem",
+          "group": "inline"
+        }
+      ]
+    }
+  }
+}
